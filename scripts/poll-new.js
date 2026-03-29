@@ -23,8 +23,8 @@ const pool = new Pool({
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-// Poll interval in milliseconds (20 minutes = 1200000ms)
-const POLL_INTERVAL = 20 * 60 * 1000;
+// Poll interval in milliseconds (20 minutes = 1200000ms) ---> changed to 5 mins
+const POLL_INTERVAL = 5 * 60 * 1000;
 
 // System prompt for the LLM
 const SYSTEM_PROMPT = `You are a categorization engine for a marketplace demand analysis tool. Your job is to categorize Arabic and English marketplace listings into clean, reusable, broad-but-accurate categories.

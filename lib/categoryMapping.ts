@@ -13,7 +13,7 @@ export const categoryMapping: Record<string, string> = {
   'furniture': 'الأثاث',
   'fashion': 'الأزياء',
   'services': 'الخدمات',
-  'pets': 'الحيوانات',
+  'pets': 'الحيوانات الأليفة',
   'sports': 'الرياضة',
   'other': 'أخرى',
   "livestock": "الحيوانات",
