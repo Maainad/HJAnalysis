@@ -20,7 +20,7 @@ export default function Dashboard() {
   const [categoryData, setCategoryData] = useState<CategoryData | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
+  const [lastUpdate, setLastUpdate] = useState<number | null>(null);
 
   // Initial fetch and setup polling to refresh UI
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function Dashboard() {
       const response = await fetch('/api/last-update');
       const data = await response.json();
       if (data.lastUpdate) {
-        setLastUpdate(new Date(data.lastUpdate));
+        setLastUpdate(data.lastUpdate);
       }
     } catch (error) {
       console.error('Error fetching last update:', error);

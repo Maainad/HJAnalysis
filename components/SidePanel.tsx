@@ -13,6 +13,7 @@ interface Listing {
   sub_category?: string;
   confidence_score: number;
   created_at: string;
+  update_date: number;
   analyzed_at: string;
 }
 
@@ -46,12 +47,12 @@ export default function SidePanel({ category, onClose }: SidePanelProps) {
       );
     }
 
-    // Apply sorting by date
+    // Apply sorting by date (update_date is Unix timestamp in seconds)
     filtered.sort((a, b) => {
       if (sortOrder === 'newest') {
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        return b.update_date - a.update_date;
       } else {
-        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+        return a.update_date - b.update_date;
       }
     });
 

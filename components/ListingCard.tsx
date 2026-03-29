@@ -13,6 +13,7 @@ interface Listing {
   sub_category?: string;
   confidence_score: number;
   created_at: string;
+  update_date: number;
   analyzed_at: string;
 }
 
@@ -253,7 +254,7 @@ export default function ListingCard({ listing, isExpanded, onExpand }: ListingCa
             <div className="flex items-center gap-2 mt-2 text-xs text-gray-500 justify-start">
               <span>{listing.author_name || 'غير معروف'}</span>
               <span>•</span>
-              <span>{formatArabicDate(listing.created_at)}</span>
+              <span>{formatArabicDate(listing.update_date)}</span>
               <span>•</span>
               <span className="font-medium text-teal-600">{listing.confidence_score}%</span>
 

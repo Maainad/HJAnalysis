@@ -12,6 +12,7 @@ interface SearchResult {
   confidence_score: number;
   author_name: string;
   created_at: string;
+  update_date: number;
 }
 
 export default function SearchBar() {
@@ -118,7 +119,7 @@ export default function SearchBar() {
                   <div className="flex items-center gap-3 mt-2 text-xs text-gray-500">
                     <span>{result.author_name || 'غير معروف'}</span>
                     <span>•</span>
-                    <span>{formatArabicDate(result.created_at)}</span>
+                    <span>{formatArabicDate(result.update_date)}</span>
                   </div>
                 </div>
               ))}

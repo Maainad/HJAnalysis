@@ -1,24 +1,31 @@
 /**
  * Date formatting utilities for Arabic dates
+ * Properly converts timestamps to Saudi Arabia timezone (Asia/Riyadh)
  */
 
 /**
  * Format date to DD/MM/YYYY HH:MM with Arabic AM/PM (م/ص)
- * @param dateString - ISO date string or Date object
- * @returns Formatted date string in Saudi time
+ * @param dateString - Unix timestamp (seconds) or ISO date string or Date object
+ * @returns Formatted date string in Saudi Arabia time (UTC+3)
  */
-export function formatArabicDate(dateString: string | Date): string {
-  const date = new Date(dateString);
+export function formatArabicDate(dateString: string | Date | number): string {
+  let date: Date;
 
-  // Subtract 4 hours to correct the offset
-  const correctedTime = new Date(date.getTime() - (4 * 60 * 60 * 1000));
+  // Handle Unix timestamp in seconds (multiply by 1000 for milliseconds)
+  if (typeof dateString === 'number' || (typeof dateString === 'string' && /^\d+$/.test(dateString))) {
+    date = new Date(Number(dateString) * 1000);
+  } else {
+    date = new Date(dateString);
+  }
 
-  const day = String(correctedTime.getUTCDate()).padStart(2, '0');
-  const month = String(correctedTime.getUTCMonth() + 1).padStart(2, '0');
-  const year = correctedTime.getUTCFullYear();
+  // Add 3 hours to UTC to get Saudi time (UTC+3)
+  const saudiTime = new Date(date.getTime() + (3 * 60 * 60 * 1000));
 
-  let hours = correctedTime.getUTCHours();
-  const minutes = String(correctedTime.getUTCMinutes()).padStart(2, '0');
+  const day = String(saudiTime.getUTCDate()).padStart(2, '0');
+  const month = String(saudiTime.getUTCMonth() + 1).padStart(2, '0');
+  const year = saudiTime.getUTCFullYear();
+  let hours = saudiTime.getUTCHours();
+  const minutes = String(saudiTime.getUTCMinutes()).padStart(2, '0');
 
   // Determine AM/PM in Arabic
   const period = hours >= 12 ? 'م' : 'ص';

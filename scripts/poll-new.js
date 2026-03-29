@@ -142,7 +142,7 @@ async function pollNewPosts() {
 
     // Fetch new posts with "مطلوب" in title that haven't been analyzed
     const query = `
-      SELECT p.id::text as post_id, p.title, p.body, p.author_username, p.post_date
+      SELECT p.id::text as post_id, p.title, p.body, p.author_username, p.post_date, p.update_date
       FROM posts p
       LEFT JOIN analyzed_demand ad ON p.id::text = ad.post_id
       WHERE p.title ILIKE '%مطلوب%'
@@ -179,8 +179,8 @@ async function pollNewPosts() {
         // Insert result into analyzed_demand table
         await client.query(
           `INSERT INTO analyzed_demand
-           (post_id, author_name, title, category, sub_category, confidence_score, reasoning, is_new_category, created_at, analyzed_at)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, to_timestamp($9), NOW())
+           (post_id, author_name, title, category, sub_category, confidence_score, reasoning, is_new_category, created_at, update_date, analyzed_at)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, to_timestamp($9), $10, NOW())
            ON CONFLICT (post_id) DO NOTHING`,
           [
             post.post_id,
@@ -191,7 +191,8 @@ async function pollNewPosts() {
             confidence,
             reasoning,
             is_new_category,
-            post.post_date
+            post.post_date,
+            post.update_date
           ]
         );
 
